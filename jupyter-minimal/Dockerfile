@@ -5,7 +5,7 @@ LABEL maintainer="Vincent Pfister <vincent.pfister@raisepartner.com>"
 
 USER root
 
-# Install all OS dependencies for fully functional notebook server + some extras
+# Install additional OS dependencies
 RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
         build-essential \
@@ -27,13 +27,12 @@ RUN apt-get update \
         nano-tiny \
         jed \
         openssh-client \
-        libgfortran5 \
         pandoc \
         jq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# add and configure notebook extensions
+# add and configure jupyter extensions
 RUN pip install --no-cache-dir -U \
         pipenv \
         ipywidgets \
