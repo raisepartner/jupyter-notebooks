@@ -49,7 +49,7 @@ RUN pip install --no-cache-dir -U \
 
 # Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
-RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
+RUN MPLBACKEND=agg python -c "import matplotlib.pyplot" && \
     fix-permissions "/home/${NB_USER}"
 
 # settings overrides
