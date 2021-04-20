@@ -37,8 +37,8 @@ RUN \
     # install run-one
     wget --quiet https://launchpad.net/run-one/trunk/1.17/+download/run-one_${RUN_ONE_VERSION}.orig.tar.gz \
     && tar -xzf run-one_${RUN_ONE_VERSION}.orig.tar.gz \
-    && mv run-one-${RUN_ONE_VERSION}/run-one /usr/local/bin/ \
-    && chmod 0755 /usr/local/bin/run-one \
+    && mv run-one-${RUN_ONE_VERSION}/run-one* /usr/local/bin/ \
+    && chmod 0755 /usr/local/bin/run-one* \
     && rm -rf /tmp/run-one* \
     # install node
     && curl -fsSL https://deb.nodesource.com/setup_15.x | bash - \
