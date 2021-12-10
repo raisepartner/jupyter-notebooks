@@ -1,4 +1,5 @@
-ARG BASE_CONTAINER=raisepartner/jupyter-base
+# published as raisepartner/jupyter-minimal:1.1.0
+ARG BASE_CONTAINER=raisepartner/jupyter-base:1.1.0
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Vincent Pfister <vincent.pfister@raisepartner.com>"
@@ -37,25 +38,24 @@ RUN pip install --no-cache-dir -U \
         pipenv \
         ipywidgets \
         ipyauth-keycloak \
+        jupyterlab_widgets \
         jupyterlab-lsp \
         'python-language-server[all]' \
-    && pip install --no-cache-dir -U \
-        # [VP 2021-04-17] required to update jedi to fix py3.9 bug
+        jupyter-dash \
         python-language-server \
-    && pip install --no-cache-dir -U --pre \
         jupyterlab-git \
     && jupyter nbextension enable --py widgetsnbextension --sys-prefix \
-    # Activate ipywidgets extension in the environment that runs the notebook server
-    # Also activate ipywidgets extension for JupyterLab
-    # Check this URL for most recent compatibilities
-    # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
+#     # Activate ipywidgets extension in the environment that runs the notebook server
+#     # Also activate ipywidgets extension for JupyterLab
+#     # Check this URL for most recent compatibilities
+#     # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
     && jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build \
-    # install jupyterlab-git extension
+#     # install jupyterlab-git extension
     && jupyter labextension install @jupyterlab/git --no-build \
-    #&& jupyter serverextension enable --py jupyterlab_git \
-    # install jupyterlab gitlab extension
-    #&& jupyter labextension install jupyterlab-gitlab --no-build \
-    #&& jupyter serverextension enable --sys-prefix jupyterlab_gitlab \
+#     #&& jupyter serverextension enable --py jupyterlab_git \
+#     # install jupyterlab gitlab extension
+#     #&& jupyter labextension install jupyterlab-gitlab --no-build \
+#     #&& jupyter serverextension enable --sys-prefix jupyterlab_gitlab \
     && jupyter serverextension enable --py --sys-prefix ipyauth.ipyauth_callback \
     && jupyter labextension install @raisepartner/ipyauth --no-build \
     && jupyter labextension install jupyterlab_onedarkpro --no-build \

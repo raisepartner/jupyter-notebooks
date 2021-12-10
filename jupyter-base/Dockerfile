@@ -1,3 +1,5 @@
+
+# published as raisepartner/jupyter-minimal:1.1.0
 ARG py_version="3.9"
 ARG ROOT_CONTAINER=python:${py_version}
 
@@ -35,13 +37,13 @@ ENV RUN_ONE_VERSION=1.17 \
     TINI_VERSION=v0.19.0
 RUN \
     # install run-one
-    wget --quiet https://launchpad.net/run-one/trunk/1.17/+download/run-one_${RUN_ONE_VERSION}.orig.tar.gz \
+    wget --quiet https://launchpad.net/run-one/trunk/${RUN_ONE_VERSION}/+download/run-one_${RUN_ONE_VERSION}.orig.tar.gz \
     && tar -xzf run-one_${RUN_ONE_VERSION}.orig.tar.gz \
     && mv run-one-${RUN_ONE_VERSION}/run-one* /usr/local/bin/ \
     && chmod 0755 /usr/local/bin/run-one* \
     && rm -rf /tmp/run-one* \
     # install node
-    && curl -fsSL https://deb.nodesource.com/setup_15.x | bash - \
+    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     # install tini
@@ -62,8 +64,8 @@ ENV SHELL=/bin/bash \
 # install jupyter
 RUN pip install -U pip \
     && pip install --no-cache-dir \
-        notebook==6.3.0 \
-        jupyterlab==3.0.14 \
+        notebook \
+        jupyterlab \
         jupyterhub \
     && npm cache clean --force \
     && jupyter notebook --generate-config \

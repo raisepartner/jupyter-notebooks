@@ -1,4 +1,5 @@
-ARG BASE_CONTAINER=raisepartner/jupyter-minimal
+# published as raisepartner/jupyter-quant:1.1.0
+ARG BASE_CONTAINER=raisepartner/jupyter-minimal:1.1.0
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Vincent Pfister <vincent.pfister@raisepartner.com>"
@@ -14,14 +15,17 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # add and configure libraries / jupyter extensions
-RUN pip install --no-cache-dir -U \
+RUN pip install -U pip \
+    && pip install --no-cache-dir -U \
         numpy \
         scipy \
         pandas \
+        pandas-datareader \
         scikit-learn \
         scipy \
         sympy \
         statsmodels \
+        plotly \
         cvxopt \
         matplotlib \
         seaborn \
@@ -36,9 +40,7 @@ RUN pip install --no-cache-dir -U \
         jupyterthemes \
         black \
         jupyterlab_code_formatter \
-    # [VP 2021-04-17: update jupyterlab because we need >=3.1.0 (still in alpha) for overriding keyboard shortcut.
-    #   Can remove when released. see https://discourse.jupyter.org/t/keyboard-shortcuts-with-overrides-json/5751]
-    && pip install -U --pre jupyterlab \
+        jupyterlab \
     # rebuild jupyter lab
     && jupyter lab build \
     # clean
